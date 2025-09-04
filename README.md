@@ -18,9 +18,9 @@ This application allows users to view and manage their stock portfolio with real
 
 - **Frontend**: Next.js 15, React 19, TypeScript
 - **UI Components**: TanStack Table for advanced table functionality
-- **Data Fetching**: TanStack Query for efficient API management
 - **Styling**: Tailwind CSS
 - **Market Data**: Yahoo Finance and Google Finance
+- **Market Data Fetching**: yahoo-finance-2 for fetching Yahoo Finance data and cheerio along with axios to fetch Google Finance data.
 
 ## Installation
 
