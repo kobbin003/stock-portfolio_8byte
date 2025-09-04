@@ -1,9 +1,7 @@
 "use client";
 import { TriangleAlertIcon } from "lucide-react";
 
-type Props = {};
-
-const DisclaimerBanner = (props: Props) => {
+const DisclaimerBanner = () => {
 	return (
 		<div className="bg-yellow-200/90 border-l-4 border-yellow-400 p-4 mb-6">
 			<div className="flex w-full justify-center">
