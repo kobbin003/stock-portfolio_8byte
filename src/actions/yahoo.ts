@@ -5,6 +5,7 @@ import yahooFinance from "yahoo-finance2";
 const getYahooFinanceData = async (
 	codes: string[]
 ): Promise<Record<string, TYahooData>> => {
+	yahooFinance.suppressNotices(["yahooSurvey"]);
 	try {
 		const result: Record<string, TYahooData> = {};
 		codes = codes.map((code) => code + ".NS");

@@ -8,10 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^138.0.2",
     "@tanstack/react-table": "^8.21.3",
     "lucide-react": "^0.542.0",
     "next": "15.5.2",
     "puppeteer": "^24.18.0",
+    "puppeteer-core": "^24.19.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-toastify": "^11.0.5",

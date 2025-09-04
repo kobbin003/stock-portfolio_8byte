@@ -1,6 +1,6 @@
 "use server";
 import { TGoogleData } from "@/types/portfolio";
-import puppeteer, { Browser } from "puppeteer";
+import { Browser } from "puppeteer";
 
 export const getGoogleFinanceData = async (codes: string[]) => {
 	const urls = codes.map((code) => ({
@@ -12,7 +12,8 @@ export const getGoogleFinanceData = async (codes: string[]) => {
 
 	try {
 		// Launch the browser and open a new blank page
-		const browser = await puppeteer.launch();
+		const browser = await getBrowser();
+		// const browser = await puppeteer.launch();
 
 		const results = await Promise.allSettled<{
 			pageData: TGoogleData;
@@ -43,6 +44,35 @@ export const getGoogleFinanceData = async (codes: string[]) => {
 		await browser.close();
 
 		return result;
+	} catch (error) {
+		throw error;
+	}
+};
+
+const getBrowser = async () => {
+	let browser;
+	try {
+		const isVercel = !!process.env.VERCEL_ENV;
+
+		let puppeteer: any,
+			launchOptions: any = {
+				headless: true,
+			};
+
+		if (isVercel) {
+			const chromium = (await import("@sparticuz/chromium")).default;
+			puppeteer = await import("puppeteer-core");
+			launchOptions = {
+				...launchOptions,
+				args: chromium.args,
+				executablePath: await chromium.executablePath(),
+			};
+		} else {
+			puppeteer = await import("puppeteer");
+		}
+
+		browser = await puppeteer.launch(launchOptions);
+		return browser;
 	} catch (error) {
 		throw error;
 	}
