@@ -66,7 +66,6 @@ const getBrowser = async () => {
 				...launchOptions,
 				args: chromium.args,
 				executablePath: await chromium.executablePath(),
-				headless: true,
 			};
 		} else {
 			puppeteer = await import("puppeteer");
@@ -83,7 +82,7 @@ const scrapGoogleFinancePage = async (url: string, browser: Browser) => {
 	const page = await browser.newPage();
 	try {
 		// Navigate the page to a URL
-		await page.goto(url);
+		await page.goto(url, { waitUntil: "load" });
 
 		// Set screen size
 		await page.setViewport({ width: 1080, height: 2500 });
@@ -95,7 +94,10 @@ const scrapGoogleFinancePage = async (url: string, browser: Browser) => {
 			if (
 				req.resourceType() === "stylesheet" ||
 				req.resourceType() === "font" ||
-				req.resourceType() === "image"
+				req.resourceType() === "image" ||
+				req.resourceType() === "media" ||
+				req.resourceType() === "script" ||
+				req.resourceType() === "other"
 			) {
 				req.abort();
 			} else {
