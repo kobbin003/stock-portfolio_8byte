@@ -1,9 +1,11 @@
 "use client";
 import { getStockData } from "@/actions/actions";
+import portfolio from "@/data/portfolio.json";
 import { TStockDisplay } from "@/types/portfolio";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import CustomToast from "./CustomToast";
 import PortfolioSection from "./PortfolioSection";
-import portfolio from "@/data/portfolio.json";
 
 export const portfolioCodeList = portfolio.map(({ code }) => code);
 
@@ -50,7 +52,14 @@ const Portfolio = () => {
 		setIsLoading(true);
 		getLiveData()
 			.catch((err) => {
-				// TODO: handle error
+				toast(
+					<CustomToast message="Failed to load portfolio data. Please refresh the page to try again." />,
+					{
+						icon: false, // Disable default icon
+						// ... other config
+						className: "p-0 w-[400px] border border-purple-600/40",
+					}
+				);
 			})
 			.finally(() => {
 				setIsLoading(false);
@@ -59,14 +68,16 @@ const Portfolio = () => {
 		// fetch every 25 sec interval
 		let timer = setInterval(() => {
 			// dont want to update loading indicator when not "initial-fetch"
-			// setIsLoading(true);
-			getLiveData()
-				.catch((err) => {
-					// TODO: handle error
-				})
-				.finally(() => {
-					// setIsLoading(false);
-				});
+			getLiveData().catch((err) => {
+				toast(
+					<CustomToast message="Failed to load portfolio data. Please refresh the page to try again." />,
+					{
+						icon: false, // Disable default icon
+						// ... other config
+						className: "p-0 w-[400px] border border-purple-600/40",
+					}
+				);
+			});
 		}, 25000);
 
 		async function getLiveData() {
@@ -75,7 +86,6 @@ const Portfolio = () => {
 				throw error;
 			}
 			if (data) {
-				console.log("fetched-data: ", data);
 				// update the stoackDisplayData after getting data:
 				const updatedStoackDisplayData: TStockDisplay[] = portfolio.map(
 					(item) => {
@@ -110,6 +120,7 @@ const Portfolio = () => {
 
 	return (
 		<div>
+			<h1 className="text-3xl font-bold px-4 py-2">Your Portfolio</h1>
 			{Object.keys(groupedData).map((key) => {
 				return (
 					<div key={key}>

@@ -24,13 +24,13 @@ const PortfolioSection = ({ tableData, isLoading, sector }: Props) => {
 			return {
 				investment: acc.investment + investment,
 				presentValue: acc.presentValue + (presentValue || 0),
-				net: acc.investment + (net || 0),
+				net: acc.net + (net || 0),
 			};
 		},
 		{ investment: 0, presentValue: 0, net: 0 }
 	);
 	return (
-		<div>
+		<div className="p-4">
 			<SectorSummary
 				investment={investment}
 				net={net}

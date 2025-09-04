@@ -27,61 +27,75 @@ export const PortfolioTable = ({ tableData, isLoading }: Props) => {
 			}),
 			columnHelper.accessor((row) => row.purchasePrice, {
 				id: "purchasePrice",
-				cell: (info) => <i>{info.getValue()}</i>,
-				header: () => <span>Purchase Price</span>,
-				// footer: (info) => info.column.id,
+				cell: (info) => <i>{info.getValue().toLocaleString()}</i>,
+				header: () => <span>Purchase Price (₹)</span>,
 			}),
 			columnHelper.accessor((row) => row.quantity, {
 				id: "quantity",
 				header: () => "Qty",
 				cell: (info) => info.getValue(),
-				// cell: (info) => info.renderValue(),
-				// footer: (info) => info.column.id,
 			}),
 			columnHelper.accessor((row) => row.investment, {
 				id: "investment",
-				header: () => "Investment",
-				cell: (info) => info.getValue(),
+				header: () => "Investment (₹)",
+				cell: (info) => info.getValue().toLocaleString(),
 			}),
 			columnHelper.accessor((row) => row.weightage, {
 				id: "weightage",
 				cell: (info) => <i>{info.getValue()}</i>,
-				header: () => <span>Portfolio(%)</span>,
-				// footer: (info) => info.column.id,
+				header: () => <span>Portfolio (%)</span>,
 			}),
 			columnHelper.accessor((row) => row.code, {
 				id: "code",
 				header: () => "NSE/BSE",
 				cell: (info) => info.getValue(),
-				// cell: (info) => info.renderValue(),
-				// footer: (info) => info.column.id,
 			}),
 			columnHelper.accessor((row) => row.cmp, {
 				id: "cmp",
 				header: () => "CMP",
-				cell: (info) => (isLoading ? "loading..." : info.getValue() ?? "-"),
+				cell: (info) =>
+					isLoading ? <i>loading...</i> : info.getValue() ?? "-",
 			}),
 			columnHelper.accessor((row) => row.presentValue, {
 				id: "presentValue",
-				header: () => "Present Value",
-				cell: (info) => (isLoading ? "loading..." : info.getValue() ?? "-"),
+				header: () => "Present Value (₹)",
+				cell: (info) =>
+					isLoading ? (
+						<i>loading...</i>
+					) : (
+						info.getValue()?.toLocaleString() ?? "-"
+					),
 			}),
 			columnHelper.accessor((row) => row.net, {
 				id: "net",
-				cell: (info) => (
-					<i>{isLoading ? "loading..." : info.getValue() ?? "-"}</i>
-				),
-				header: () => <span>Gain/Loss</span>,
+				cell: (info) => {
+					const value = info.getValue();
+					if (isLoading) return <i>loading...</i>;
+					if (value === null || value === undefined) return <i>-</i>;
+					const isGain = value >= 0;
+					return (
+						<i
+							className={`font-semibold ${
+								isGain ? "text-green-600" : "text-red-600"
+							}`}
+						>
+							{value.toLocaleString()}
+						</i>
+					);
+				},
+				header: () => <span>Gain/Loss (₹)</span>,
 			}),
 			columnHelper.accessor((row) => row.peRatio, {
 				id: "peRatio",
 				header: () => "P/E Ratio",
-				cell: (info) => (isLoading ? "loading..." : info.getValue() ?? "-"),
+				cell: (info) =>
+					isLoading ? <i>loading...</i> : info.getValue() ?? "-",
 			}),
 			columnHelper.accessor((row) => row.latestEarnings, {
 				id: "latestEarnings",
 				header: () => "Latest Earnings",
-				cell: (info) => (isLoading ? "loading..." : info.getValue() ?? "-"),
+				cell: (info) =>
+					isLoading ? <i>loading...</i> : info.getValue() ?? "-",
 			}),
 		],
 		[isLoading]
@@ -94,13 +108,16 @@ export const PortfolioTable = ({ tableData, isLoading }: Props) => {
 	});
 
 	return (
-		<div className="p-2">
-			<table>
-				<thead>
+		<div className="overflow-x-auto">
+			<table className="w-full border-collapse bg-white shadow-lg rounded-lg overflow-hidden">
+				<thead className="bg-gray-50">
 					{table.getHeaderGroups().map((headerGroup) => (
-						<tr key={headerGroup.id}>
+						<tr key={headerGroup.id} className="border-b border-gray-200">
 							{headerGroup.headers.map((header) => (
-								<th key={header.id}>
+								<th
+									key={header.id}
+									className="px-6 py-3 text-left text-xs font-semibold text-black uppercase tracking-wider"
+								>
 									{header.isPlaceholder
 										? null
 										: flexRender(
@@ -112,11 +129,17 @@ export const PortfolioTable = ({ tableData, isLoading }: Props) => {
 						</tr>
 					))}
 				</thead>
-				<tbody>
+				<tbody className="bg-white divide-y divide-gray-200">
 					{table.getRowModel().rows.map((row) => (
-						<tr key={row.id}>
+						<tr
+							key={row.id}
+							className="hover:bg-gray-50 transition-colors duration-150"
+						>
 							{row.getVisibleCells().map((cell) => (
-								<td key={cell.id}>
+								<td
+									key={cell.id}
+									className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+								>
 									{flexRender(cell.column.columnDef.cell, cell.getContext())}
 								</td>
 							))}
