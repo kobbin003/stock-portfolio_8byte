@@ -1,10 +1,9 @@
 "use client";
 import { getStockData } from "@/actions/actions";
-// import { portfolio } from "@/data/portfolio";
 import { TStockDisplay } from "@/types/portfolio";
 import { useEffect, useState } from "react";
 import PortfolioSection from "./PortfolioSection";
-import { portfolio } from "@/data/portfolio.json";
+import portfolio from "@/data/portfolio.json";
 
 export const portfolioCodeList = portfolio.map(({ code }) => code);
 
