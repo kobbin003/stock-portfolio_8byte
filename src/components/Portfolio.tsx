@@ -56,7 +56,6 @@ const Portfolio = () => {
 					<CustomToast message="Failed to load portfolio data. Please refresh the page to try again." />,
 					{
 						icon: false, // Disable default icon
-						// ... other config
 						className: "p-0 w-[400px] border border-purple-600/40",
 					}
 				);
@@ -73,7 +72,6 @@ const Portfolio = () => {
 					<CustomToast message="Failed to load portfolio data. Please refresh the page to try again." />,
 					{
 						icon: false, // Disable default icon
-						// ... other config
 						className: "p-0 w-[400px] border border-purple-600/40",
 					}
 				);

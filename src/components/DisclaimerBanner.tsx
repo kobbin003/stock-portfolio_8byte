@@ -1,4 +1,3 @@
-"use client";
 import { TriangleAlertIcon } from "lucide-react";
 
 const DisclaimerBanner = () => {

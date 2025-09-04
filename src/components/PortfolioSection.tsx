@@ -1,4 +1,4 @@
-import { TStock, TStockDisplay } from "@/types/portfolio";
+import { TStockDisplay } from "@/types/portfolio";
 import { PortfolioTable } from "./PortfolioTable";
 import SectorSummary from "./SectorSummary";
 
