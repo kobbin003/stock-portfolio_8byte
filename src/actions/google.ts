@@ -66,6 +66,7 @@ const getBrowser = async () => {
 				...launchOptions,
 				args: chromium.args,
 				executablePath: await chromium.executablePath(),
+				headless: true,
 			};
 		} else {
 			puppeteer = await import("puppeteer");
@@ -86,12 +87,27 @@ const scrapGoogleFinancePage = async (url: string, browser: Browser) => {
 
 		// Set screen size
 		await page.setViewport({ width: 1080, height: 2500 });
+		// Enable request interception
+		await page.setRequestInterception(true);
+
+		// Intercept requests and block certain resource types
+		page.on("request", (req) => {
+			if (
+				req.resourceType() === "stylesheet" ||
+				req.resourceType() === "font" ||
+				req.resourceType() === "image"
+			) {
+				req.abort();
+			} else {
+				req.continue();
+			}
+		});
 
 		// Direct DOM manipulation with Puppeteer
 		const peRatioPath =
 			"[aria-labelledby=key-stats-heading]>div:nth-child(7)>div";
 
-		await page.waitForSelector(peRatioPath);
+		await page.waitForSelector(peRatioPath, { visible: true });
 
 		const peRatioElement = await page.$(peRatioPath);
 
@@ -104,7 +120,7 @@ const scrapGoogleFinancePage = async (url: string, browser: Browser) => {
 		const epsValuePath =
 			"table.slpEwd:nth-of-type(1) > tr:nth-child(6) > td:nth-child(2)";
 
-		await page.waitForSelector(epsValuePath);
+		await page.waitForSelector(epsValuePath, { visible: true });
 
 		const epsElement = await page.$(epsValuePath);
 
