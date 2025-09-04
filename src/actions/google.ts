@@ -1,5 +1,5 @@
 "use server";
-import { TGoogleData } from "@/components/Portfolio";
+import { TGoogleData } from "@/types/portfolio";
 import puppeteer, { Browser } from "puppeteer";
 
 export const getGoogleFinanceData = async (codes: string[]) => {

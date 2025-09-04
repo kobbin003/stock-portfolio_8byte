@@ -8,10 +8,19 @@ export type TStock = {
 
 export type TStockDisplay = TStock & {
 	investment: number;
-	cmp: number;
-	presentValue: number;
-	net: number;
+	cmp: number | null;
+	presentValue: number | null;
+	net: number | null;
 	weightage: number;
-	peRatio: number;
-	latestEarnings: number;
+	peRatio: number | null;
+	latestEarnings: number | null;
 };
+
+export type TYahooData = { cmp: number | null };
+
+export type TGoogleData = {
+	peRatio: number | null;
+	latestEarning: number | null;
+};
+
+export type TStockFetchedData = Record<string, TYahooData & TGoogleData>;

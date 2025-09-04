@@ -1,5 +1,5 @@
 "use server";
-import { TYahooData } from "@/components/Portfolio";
+import { TYahooData } from "@/types/portfolio";
 import yahooFinance from "yahoo-finance2";
 
 const getYahooFinanceData = async (

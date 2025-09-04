@@ -1,9 +1,9 @@
 "use server";
 
-import { TStockFetchedData } from "@/components/Portfolio";
 import { revalidateTag, unstable_cache } from "next/cache";
 import { getGoogleFinanceData } from "./google";
 import getYahooFinanceData from "./yahoo";
+import { TStockFetchedData } from "@/types/portfolio";
 
 export const getStockData = unstable_cache(
 	async (
