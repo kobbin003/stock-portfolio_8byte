@@ -52,9 +52,9 @@ export const PortfolioTable = ({ tableData, isLoading }: Props) => {
 			}),
 			columnHelper.accessor((row) => row.cmp, {
 				id: "cmp",
-				header: () => "CMP",
+				header: () => "CMP (₹)",
 				cell: (info) =>
-					isLoading ? <i>loading...</i> : info.getValue() ?? "-",
+					isLoading ? <i>loading...</i> : info.getValue() ?? "N/A",
 			}),
 			columnHelper.accessor((row) => row.presentValue, {
 				id: "presentValue",
@@ -63,7 +63,7 @@ export const PortfolioTable = ({ tableData, isLoading }: Props) => {
 					isLoading ? (
 						<i>loading...</i>
 					) : (
-						info.getValue()?.toLocaleString() ?? "-"
+						info.getValue()?.toLocaleString() ?? "N/A"
 					),
 			}),
 			columnHelper.accessor((row) => row.net, {
@@ -71,7 +71,7 @@ export const PortfolioTable = ({ tableData, isLoading }: Props) => {
 				cell: (info) => {
 					const value = info.getValue();
 					if (isLoading) return <i>loading...</i>;
-					if (value === null || value === undefined) return <i>-</i>;
+					if (value === null || value === undefined) return "N/A";
 					const isGain = value >= 0;
 					return (
 						<i
@@ -89,13 +89,13 @@ export const PortfolioTable = ({ tableData, isLoading }: Props) => {
 				id: "peRatio",
 				header: () => "P/E Ratio",
 				cell: (info) =>
-					isLoading ? <i>loading...</i> : info.getValue() ?? "-",
+					isLoading ? <i>loading...</i> : info.getValue() ?? "N/A",
 			}),
 			columnHelper.accessor((row) => row.latestEarnings, {
 				id: "latestEarnings",
 				header: () => "Latest Earnings",
 				cell: (info) =>
-					isLoading ? <i>loading...</i> : info.getValue() ?? "-",
+					isLoading ? <i>loading...</i> : info.getValue() ?? "N/A",
 			}),
 		],
 		[isLoading]

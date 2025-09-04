@@ -65,7 +65,7 @@ const Portfolio = () => {
 				setIsLoading(false);
 			});
 
-		// fetch every 25 sec interval
+		// fetch every 15 sec interval
 		let timer = setInterval(() => {
 			// dont want to update loading indicator when not "initial-fetch"
 			getLiveData().catch((err) => {
@@ -78,7 +78,7 @@ const Portfolio = () => {
 					}
 				);
 			});
-		}, 25000);
+		}, 15000);
 
 		async function getLiveData() {
 			const { data, error } = await getStockData(portfolioCodeList);

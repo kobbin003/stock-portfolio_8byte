@@ -41,6 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 files/
-src/components/FetchDataBtn.tsx
-src/data/portfolio.ts
 challenges.md
+
+

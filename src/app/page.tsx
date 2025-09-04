@@ -1,4 +1,5 @@
 import DisclaimerBanner from "@/components/DisclaimerBanner";
+import FetchDataBtn from "@/components/FetchDataBtn";
 import Portfolio from "@/components/Portfolio";
 import { Slide, ToastContainer } from "react-toastify";
 
@@ -19,6 +20,7 @@ export default function Home() {
 				/>
 				<DisclaimerBanner />
 				<Portfolio />
+				{/* <FetchDataBtn /> */}
 			</main>
 			<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
 		</div>
